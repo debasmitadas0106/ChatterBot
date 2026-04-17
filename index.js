@@ -1,15 +1,19 @@
-const express = require ('express')
+const express = require("express");
 const app = express();
-const axios = require ('axios');
-const port = 5000;
+const dotenv = require("dotenv");
+const axios = require("axios");
+const { createUserController } = require("./api/Controller/userController");
+const port = process.env.PORT || 5000;
 
-app.use(express.urlencoded({extended:false}));
-app.use(express.text({ type: "*/*" }));
+dotenv.config();
 
-app.get("/",(req,res)=>{
-    res.send("Hi the app is working")
-})
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(port,()=>{
-    console.log(`app is listening at port ${port}`)
-})
+app.get("/", (req, res) => {
+  res.send("Hi the app is working");
+});
+app.post("/create-user", createUserController);
+app.listen(port, () => {
+  console.log(`app is listening at port ${port}`);
+});
