@@ -2,14 +2,12 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 let connections = {};
-let timeouts = {};
 let clusterConnection = {};
 async function ClusterConnection() {
   try {
     clusterConnection = await mongoose.createConnection(
       process.env.MONGODB_URI,
     );
-    // console.log(clusterConnection);
     console.log("Connected to MongoDB Cluster");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
