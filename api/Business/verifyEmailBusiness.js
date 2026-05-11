@@ -15,10 +15,11 @@ const verifyEmailBusiness = async (payload) => {
       token: "",
       verified: true,
     };
-    const userDetails = await updateUserService(dbPayload);
+    const userDetails = await updateUserService({ token: token }, dbPayload);
     const dbName = `LogDoor_${findUserDetails._id}`;
     const userDbpayload = {
-      ...findUserDetails,
+      email: findUserDetails?.email,
+      userId: findUserDetails?._id,
       role: "admin",
       verified: true,
     };

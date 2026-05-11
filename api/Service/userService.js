@@ -17,7 +17,7 @@ const findUserService = async (condition, dbUrl = "LogDoor") => {
   try {
     const conn = await dbConnect(dbUrl);
     const userDetails = await conn.model("Users", userSchema, "Users");
-    const userDetailsCreate = await userDetails.findOne(condition);
+    const userDetailsCreate = await userDetails.findOne(condition).lean();
     return userDetailsCreate;
   } catch (error) {
     console.log(error);

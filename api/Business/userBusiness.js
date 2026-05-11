@@ -4,16 +4,19 @@ const {
   findAllUserService,
 } = require("../Service/userService");
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
 
 const createUserBusiness = async (payload) => {
   try {
-    const { firstName, lastName, email, phone, interests } = payload;
+    const { firstName, lastName, email, password, phone, interests } = payload;
     const findUserDetails = await findUserService({ email: email });
     if (findUserDetails) {
       return "user already exists";
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    payload.password = hashedPassword;
     payload.token = uuidv4();
-    payload.verified = false
+    payload.verified = false;
     const userDetails = await createUserService(payload);
     return userDetails;
   } catch (error) {
